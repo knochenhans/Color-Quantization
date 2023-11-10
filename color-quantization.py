@@ -20,7 +20,10 @@ def kmeans_main(cluster_points):
     # rounding pixel values and getting cluster RGB
     centers = []
     for i in range(len(cluster_points)):
-        cluster_points[i] = (int(math.floor(cluster_points[i][0])), int(math.floor(cluster_points[i][1])))
+        cluster_points[i] = (
+            int(math.floor(cluster_points[i][0])),
+            int(math.floor(cluster_points[i][1])),
+        )
         red = IMAGE_3D_MATRIX[cluster_points[i][0]][cluster_points[i][1]][0]
         green = IMAGE_3D_MATRIX[cluster_points[i][0]][cluster_points[i][1]][1]
         blue = IMAGE_3D_MATRIX[cluster_points[i][0]][cluster_points[i][1]][2]
@@ -29,13 +32,19 @@ def kmeans_main(cluster_points):
     centers = np.array(centers)
 
     # Initializing class and distance arrays
-    classes = np.zeros([IMAGE_3D_MATRIX.shape[0], IMAGE_3D_MATRIX.shape[1]], dtype=np.float64)
-    distances = np.zeros([IMAGE_3D_MATRIX.shape[0], IMAGE_3D_MATRIX.shape[1], K], dtype=np.float64)
+    classes = np.zeros(
+        [IMAGE_3D_MATRIX.shape[0], IMAGE_3D_MATRIX.shape[1]], dtype=np.float64
+    )
+    distances = np.zeros(
+        [IMAGE_3D_MATRIX.shape[0], IMAGE_3D_MATRIX.shape[1], K], dtype=np.float64
+    )
 
     for i in range(10):
         # finding distances for each center
         for j in range(K):
-            distances[:, :, j] = np.sqrt(((IMAGE_3D_MATRIX - centers[j]) ** 2).sum(axis=2))
+            distances[:, :, j] = np.sqrt(
+                ((IMAGE_3D_MATRIX - centers[j]) ** 2).sum(axis=2)
+            )
 
         # choosing the minimum distance class for each pixel
         classes = np.argmin(distances, axis=2)
@@ -71,10 +80,10 @@ def kmeans_with_random():
 
 def read_image():
     global IMAGE, IMAGE_3D_MATRIX, PATH_TO_FILE
-    IMAGE = Image.open(open(PATH_TO_FILE, 'rb'))
+    IMAGE = Image.open(open(PATH_TO_FILE, "rb"))
 
-    if IMAGE.mode == 'RGBA':
-        IMAGE = IMAGE.convert('RGB')
+    if IMAGE.mode == "RGBA":
+        IMAGE = IMAGE.convert("RGB")
 
     IMAGE_3D_MATRIX = np.array(IMAGE).astype(int)
 
@@ -87,7 +96,9 @@ def handle_arguments():
         sys.exit("K should be greater than 1, your K value is {}".format(K))
 
     if RUN_MODE not in {0, 1}:
-        sys.exit("Program mode should be either 0 or 1, your value is {}".format(RUN_MODE))
+        sys.exit(
+            "Program mode should be either 0 or 1, your value is {}".format(RUN_MODE)
+        )
 
 
 def save_image():
