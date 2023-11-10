@@ -2,6 +2,7 @@ __author__ = "Alican Safak Ozdek"
 __email__ = "safakozdek@gmail.com"
 __status__ = "Running"
 
+import os
 from PIL import Image
 from matplotlib import pyplot as plt
 import sys
@@ -91,8 +92,11 @@ def handle_arguments():
 
 def save_image():
     global IMAGE_3D_MATRIX
-    im = Image.fromarray(IMAGE_3D_MATRIX.astype('uint8'))
-    im.save('output.png')
+    im = Image.fromarray(IMAGE_3D_MATRIX.astype("uint8"))
+
+    file_name, file_extension = os.path.splitext(os.path.basename(PATH_TO_FILE))
+    output_file_name = f"{file_name}_quantized{file_extension}"
+    im.save(output_file_name)
 
 
 if __name__ == "__main__":
