@@ -71,6 +71,10 @@ def kmeans_with_random():
 def read_image():
     global IMAGE, IMAGE_3D_MATRIX, PATH_TO_FILE
     IMAGE = Image.open(open(PATH_TO_FILE, 'rb'))
+
+    if IMAGE.mode == 'RGBA':
+        IMAGE = IMAGE.convert('RGB')
+
     IMAGE_3D_MATRIX = np.array(IMAGE).astype(int)
 
 
